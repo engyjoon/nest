@@ -1,6 +1,7 @@
 #!/bin/bash
 
-HOME="/home/nest/nest"
+DIR_HOME="/home/nest/nest"
+DIR_CONFIG="${DIR_HOME}/config.d"
 
 if [ "$1" == "" ]; then
 	echo "Usage : nest { done | help | reset }"
@@ -10,13 +11,13 @@ if [ "$1" == "trainee" ]; then
 	if [ "$2" == "" ]; then
 		echo "Usage : nest trainee [ NUMBER ]"
 	else
-		if [ ! -d "$HOME/trainee.d" ]; then
-			mkdir "$HOME/trainee.d"
+		if [ ! -d "$DIR_HOME/trainee.d" ]; then
+			mkdir "$DIR_HOME/trainee.d"
 		fi
 
 		for i in $(seq -f "%02g" 1 $2)
 		do
-			mkdir "$HOME/trainee.d/stduser$i"
+			mkdir "$DIR_HOME/trainee.d/stduser$i"
 		done
 	fi
 	exit 0
@@ -27,11 +28,11 @@ if [ "$1" == "check" ]; then
 	do
 		clear
 		n=0
-		for i in $(ls $HOME/trainee.d)
+		for i in $(ls $DIR_HOME/trainee.d)
 		do
-			if [ -f "$HOME/trainee.d/$i/done" ]; then
+			if [ -f "$DIR_HOME/trainee.d/$i/done" ]; then
 				EMOJI="\033[47;30m^_^\033[0m"
-			elif [ -f "$HOME/trainee.d/$i/help" ]; then
+			elif [ -f "$DIR_HOME/trainee.d/$i/help" ]; then
 				EMOJI="\033[43;30mT.T\033[0m"
 			else
 				EMOJI="-.-"
@@ -50,14 +51,30 @@ if [ "$1" == "check" ]; then
 fi
 
 if [ "$1" == "clear" ]; then
-	for i in $(ls $HOME/trainee.d)
+	for i in $(ls $DIR_HOME/trainee.d)
 	do
-		echo "rm -f $HOME/trainee.d/$i/*"
-		rm -f "$HOME/trainee.d/$i/"*
+		echo "rm -f $DIR_HOME/trainee.d/$i/*"
+		rm -f "$DIR_HOME/trainee.d/$i/"*
 	done
 fi
 
 
 if [ "$1" == "setup" ]; then
-	echo test
+	echo -n "Input server IP : "
+	read val
+	server_ip=val
+	echo $val > $DIR_CONFIG/server
+
+	echo ""
+	echo "ssh-keygen"
+	ssh-keygen
+
+	echo ""
+	echo "ssh-copy-id"
+	ssh-copy-id nest@"$server_ip"
+
+	echo -n "Input trainee name : "
+	read val
+	trainee_name=$val
+	echo $val > $DIR_CONFIG/trainee
 fi
