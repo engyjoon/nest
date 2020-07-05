@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOME="/root/nest"
+HOME="/home/nest/nest"
 
 if [ "$1" == "" ]; then
 	echo "Usage : nest { done | help | reset }"
