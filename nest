@@ -1,3 +1,63 @@
 #!/bin/bash
 
-echo test
+HOME="/root/nest"
+
+if [ "$1" == "" ]; then
+	echo "Usage : nest { done | help | reset }"
+fi
+
+if [ "$1" == "trainee" ]; then
+	if [ "$2" == "" ]; then
+		echo "Usage : nest trainee [ NUMBER ]"
+	else
+		if [ ! -d "$HOME/trainee.d" ]; then
+			mkdir "$HOME/trainee.d"
+		fi
+
+		for i in $(seq -f "%02g" 1 $2)
+		do
+			mkdir "$HOME/trainee.d/stduser$i"
+		done
+	fi
+	exit 0
+fi
+
+if [ "$1" == "check" ]; then
+	while true
+	do
+		clear
+		n=0
+		for i in $(ls $HOME/trainee.d)
+		do
+			if [ -f "$HOME/trainee.d/$i/done" ]; then
+				EMOJI="\033[47;30m^_^\033[0m"
+			elif [ -f "$HOME/trainee.d/$i/help" ]; then
+				EMOJI="\033[43;30mT.T\033[0m"
+			else
+				EMOJI="-.-"
+			fi
+
+			if [ "$n" -eq  9 ]; then
+				echo -e "$i($EMOJI)"
+				n=0
+			else
+				echo -e -n "$i($EMOJI) "
+				n=$((n + 1))
+			fi
+		done
+		sleep 5
+	done
+fi
+
+if [ "$1" == "clear" ]; then
+	for i in $(ls $HOME/trainee.d)
+	do
+		echo "rm -f $HOME/trainee.d/$i/*"
+		rm -f "$HOME/trainee.d/$i/"*
+	done
+fi
+
+
+if [ "$1" == "setup" ]; then
+	echo test
+fi
