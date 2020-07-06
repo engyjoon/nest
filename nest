@@ -89,5 +89,8 @@ fi
 
 if [ "$1" == "status" ]; then
 	result=$(ssh nest@$SERVER ls $DIR_HOME/trainee.d/$TRAINEE)
+	if [ "$result" == "" ]; then
+		echo "none"
+	fi
 	echo "$result"
 fi
