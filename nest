@@ -9,6 +9,28 @@ if [ "$1" == "" ]; then
 	echo "Usage : nest { done | help | reset | status }"
 fi
 
+if [ "$1" == "status" ]; then
+	result=$(ssh nest@$SERVER ls $DIR_HOME/trainee.d/$TRAINEE)
+	if [ "$result" == "" ]; then
+		result="none"
+	fi
+	echo "$result"
+fi
+
+if [ "$1" == "done" ]; then
+	ssh nest@$SERVER rm -f $DIR_HOME/trainee.d/$TRAINEE/*
+	ssh nest@$SERVER touch $DIR_HOME/trainee.d/$TRAINEE/done
+fi
+
+if [ "$1" == "help" ]; then
+	ssh nest@$SERVER rm -f $DIR_HOME/trainee.d/$TRAINEE/*
+	ssh nest@$SERVER touch $DIR_HOME/trainee.d/$TRAINEE/help
+fi
+
+if [ "$1" == "reset" ]; then
+	ssh nest@$SERVER rm -f $DIR_HOME/trainee.d/$TRAINEE/*
+fi
+
 if [ "$1" == "addlink" ]; then
 	ln -s "${DIR_HOME}/nest" /usr/local/bin/nest
 fi
@@ -85,12 +107,4 @@ if [ "$1" == "setup" ]; then
 	read val
 	trainee_name="$val"
 	echo $val > $DIR_CONFIG/trainee
-fi
-
-if [ "$1" == "status" ]; then
-	result=$(ssh nest@$SERVER ls $DIR_HOME/trainee.d/$TRAINEE)
-	if [ "$result" == "" ]; then
-		echo "none"
-	fi
-	echo "$result"
 fi
