@@ -81,7 +81,7 @@ fi
 if [ "$1" == "clear" ]; then
 	for i in $(ls $DIR_HOME/trainee.d)
 	do
-		echo "rm -f $DIR_HOME/trainee.d/$i/*"
+		#echo "rm -f $DIR_HOME/trainee.d/$i/*"
 		rm -f "$DIR_HOME/trainee.d/$i/"*
 	done
 fi
