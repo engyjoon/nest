@@ -74,7 +74,7 @@ if [ "$1" == "setup" ]; then
 	ssh-keygen
 
 	echo ""
-	echo "ssh-copy-id"
+	echo "ssh-copy-id nest@$server_ip"
 	ssh-copy-id nest@"$server_ip"
 
 	echo -n "Input trainee name : "
