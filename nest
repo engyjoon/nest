@@ -7,6 +7,10 @@ if [ "$1" == "" ]; then
 	echo "Usage : nest { done | help | reset }"
 fi
 
+if [ "$1" == "addlink" ]; then
+	ln -s "${DIR_HOME}/nest" /usr/local/bin/nest
+fi
+
 if [ "$1" == "trainee" ]; then
 	if [ "$2" == "" ]; then
 		echo "Usage : nest trainee [ NUMBER ]"
