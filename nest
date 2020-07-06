@@ -2,9 +2,11 @@
 
 DIR_HOME="/home/nest/nest"
 DIR_CONFIG="${DIR_HOME}/config.d"
+SERVER=$(cat "${DIR_CONFIG}/server")
+TRAINEE=$(cat "${DIR_CONFIG}/trainee")
 
 if [ "$1" == "" ]; then
-	echo "Usage : nest { done | help | reset }"
+	echo "Usage : nest { done | help | reset | status }"
 fi
 
 if [ "$1" == "addlink" ]; then
@@ -83,4 +85,9 @@ if [ "$1" == "setup" ]; then
 	read val
 	trainee_name="$val"
 	echo $val > $DIR_CONFIG/trainee
+fi
+
+if [ "$1" == "status" ]; then
+	result=$(ssh nest@$SERVER ls $HOME/trainee.d/$TRAINEE)
+	echo "$result"
 fi
