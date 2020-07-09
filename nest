@@ -6,7 +6,7 @@ SERVER=$(cat "${DIR_CONFIG}/server")
 TRAINEE=$(cat "${DIR_CONFIG}/trainee")
 
 if [ "$1" == "" ]; then
-	echo "Usage : nest { done | help | reset | status }"
+	echo "Usage : nest { done | good | easy | help | reset | status }"
 fi
 
 if [ "$1" == "status" ]; then
