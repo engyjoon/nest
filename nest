@@ -22,6 +22,16 @@ if [ "$1" == "done" ]; then
 	ssh nest@$SERVER touch $DIR_HOME/trainee.d/$TRAINEE/done
 fi
 
+if [ "$1" == "good" ]; then
+	ssh nest@$SERVER rm -f $DIR_HOME/trainee.d/$TRAINEE/*
+	ssh nest@$SERVER touch $DIR_HOME/trainee.d/$TRAINEE/good
+fi
+
+if [ "$1" == "easy" ]; then
+	ssh nest@$SERVER rm -f $DIR_HOME/trainee.d/$TRAINEE/*
+	ssh nest@$SERVER touch $DIR_HOME/trainee.d/$TRAINEE/easy
+fi
+
 if [ "$1" == "help" ]; then
 	ssh nest@$SERVER rm -f $DIR_HOME/trainee.d/$TRAINEE/*
 	ssh nest@$SERVER touch $DIR_HOME/trainee.d/$TRAINEE/help
@@ -62,6 +72,10 @@ if [ "$1" == "check" ]; then
 		do
 			if [ -f "$DIR_HOME/trainee.d/$i/done" ]; then
 				EMOJI="\033[47;30m^_^\033[0m"
+			elif [ -f "$DIR_HOME/trainee.d/$i/good" ]; then
+				EMOJI="\033[47;30m^o^\033[0m"
+			elif [ -f "$DIR_HOME/trainee.d/$i/easy" ]; then
+				EMOJI="\033[47;30m^.-\033[0m"
 			elif [ -f "$DIR_HOME/trainee.d/$i/help" ]; then
 				EMOJI="\033[43;30mT.T\033[0m"
 			else
