@@ -91,7 +91,7 @@ if [ "$1" == "check" ]; then
 			fi
 			tnum=$((tnum + 1))
 		done
-		sleep 3
+		sleep 1
 	done
 fi
 
