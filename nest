@@ -61,8 +61,8 @@ if [ "$1" == "trainee" ]; then
 	exit 0
 fi
 
-cnt_trainee=$(ls $DIR_HOME/trainee.d | wc -l)
 if [ "$1" == "check" ]; then
+	cnt_trainee=$(ls $DIR_HOME/trainee.d | wc -l)
 	while true
 	do
 		clear
