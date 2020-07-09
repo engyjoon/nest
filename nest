@@ -51,11 +51,13 @@ if [ "$1" == "trainee" ]; then
 	exit 0
 fi
 
+cnt_trainee=$(ls $DIR_HOME/trainee.d | wc -l)
 if [ "$1" == "check" ]; then
 	while true
 	do
 		clear
-		n=0
+		num=1
+		tnum=1
 		for i in $(ls $DIR_HOME/trainee.d)
 		do
 			if [ -f "$DIR_HOME/trainee.d/$i/done" ]; then
@@ -66,13 +68,14 @@ if [ "$1" == "check" ]; then
 				EMOJI="-.-"
 			fi
 
-			if [ "$n" -eq  4 ]; then
+			if [ "$num" -eq  5 -a "$tnum" != "$cnt_trainee" ]; then
 				echo -e "$i($EMOJI)"
-				n=0
+				num=1
 			else
 				echo -e -n "$i($EMOJI) "
-				n=$((n + 1))
+				num=$((num + 1))
 			fi
+			tnum=$((tnum + 1))
 		done
 		sleep 3
 	done
